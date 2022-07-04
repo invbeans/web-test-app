@@ -21,7 +21,7 @@ public class User implements UserDetails {
     @Column(name = "username", length = 32)
     private String username;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50, unique = true)
     private String email;
 
     @Column(name = "password", length = 50)
@@ -35,7 +35,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername(){
-        return username;
+        return email;
     }
 
     public Set<Role> getRoles() {
