@@ -1,5 +1,6 @@
 package ru.invbeans.model.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,11 @@ public class Role implements GrantedAuthority {
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public String getAuthority() {

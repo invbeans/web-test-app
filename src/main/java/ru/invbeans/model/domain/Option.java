@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "option_table")
 public class Option {
-    //id, question, name, correct
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "option_table")
