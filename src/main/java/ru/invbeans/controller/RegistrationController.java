@@ -17,6 +17,6 @@ public interface RegistrationController {
     @GetMapping()
     String registration(Model model);
 
-    @PostMapping
+    @PostMapping()
     String addUser(@ModelAttribute("userForm") @Valid UserDto userForm, BindingResult bindingResult, Model model);
 }
