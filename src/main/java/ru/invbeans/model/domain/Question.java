@@ -23,6 +23,9 @@ public class Question {
     @Column(name = "name", length = 150)
     private String name;
 
+    @Column(name = "oneAnswer")
+    private boolean oneAnswer;
+
     @OneToMany(mappedBy = "question")
     private List<Option> options;
 }

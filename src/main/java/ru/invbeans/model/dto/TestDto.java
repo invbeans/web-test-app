@@ -9,6 +9,5 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class TestDto {
     private String name;
-    private boolean oneAnswer;
     private QuestionDto[] questions;
 }

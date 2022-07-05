@@ -19,9 +19,6 @@ public class Test {
     @Column(name = "name", length = 150)
     private String name;
 
-    @Column(name = "oneAnswer")
-    private boolean oneAnswer;
-
     @OneToMany(mappedBy = "test")
     private List<Question> questions;
 }

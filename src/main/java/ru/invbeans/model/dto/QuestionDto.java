@@ -9,5 +9,6 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class QuestionDto {
     private String name;
+    private boolean oneAnswer;
     private OptionDto[] options;
 }
