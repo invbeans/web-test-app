@@ -1,28 +1,27 @@
 package ru.invbeans.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import ru.invbeans.model.domain.Role;
 import ru.invbeans.model.domain.User;
 import ru.invbeans.model.dto.UserDto;
-import ru.invbeans.repository.RoleRepository;
 import ru.invbeans.repository.UserRepository;
 import ru.invbeans.service.UserService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    @Autowired
-    UserRepository userRepository;
-
+    private final UserRepository userRepository;
     @Autowired
     BCryptPasswordEncoder encoder;
 

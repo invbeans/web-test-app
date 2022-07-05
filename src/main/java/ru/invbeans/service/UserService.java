@@ -1,6 +1,5 @@
 package ru.invbeans.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.invbeans.model.domain.User;
 import ru.invbeans.model.dto.UserDto;
 
