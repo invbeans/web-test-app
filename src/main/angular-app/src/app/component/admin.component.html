@@ -1,0 +1,13 @@
+<p>Admin page</p>
+<label>Test name</label>
+<input type="text" [(ngModel)]="testName"/>
+<button (click)="addQuestion()">Add question</button>
+<div class="question-container" *ngFor="let ques of questionArray; let indQues = index">
+  <input type="text" [(ngModel)]="ques.name" placeholder="Question text"/>
+  <button (click)="addOption(indQues)">Add option</button>
+  <div class="option-container" *ngFor="let opt of ques.options">
+    <input type="text" [(ngModel)]="opt.name" placeholder="Option text"/>
+    <input type="checkbox" [(ngModel)]="opt.correct"/>
+  </div>
+</div>
+<button (click)="saveTest()">Save your test</button>
