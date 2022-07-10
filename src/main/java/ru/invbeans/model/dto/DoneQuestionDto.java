@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class TestDto {
+public class DoneQuestionDto {
     private Long id;
-    private String name;
-    private QuestionDto[] questions;
+    private Long question;
+    private int[] chosen;
 }

@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class TestDto {
+@RequiredArgsConstructor
+public class DoneTestDto {
     private Long id;
-    private String name;
-    private QuestionDto[] questions;
+    private Long test;
+    private Long user;
+    private int score;
 }

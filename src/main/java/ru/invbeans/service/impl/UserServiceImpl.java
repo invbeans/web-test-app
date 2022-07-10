@@ -3,7 +3,6 @@ package ru.invbeans.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,26 +18,32 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     @Autowired
     BCryptPasswordEncoder encoder;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        Optional<User> userOptional = userRepository.findByUsername(username);
         if(!userOptional.isPresent()){
-            throw new UsernameNotFoundException("User not found");
+            return null;
         }
         User user = userOptional.get();
+        String authority = (user.getRoles().contains("ROLE_ADMIN")) ? "ROLE_ADMIN" : "ROLE_USER";
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .username(user.getUsername())
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
+                .authorities(authority)
                 .roles(String.valueOf(user.getRoles()))
-                .authorities("ROLE_USER")
                 .build();
+    }
+
+    @Override
+    public User findForLogin(String username){
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        return optionalUser.orElse(null);
     }
 
     @Override
@@ -53,10 +58,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public boolean saveUser(UserDto userDto) {
-        Optional<User> optionalUser = userRepository.findByUsername(userDto.getEmail());
+    public UserDto saveUser(UserDto userDto) {
+        Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
         if(optionalUser.isPresent()){
-            return false;
+            return null;
         }
         User user = new User();
         user.setEmail(userDto.getEmail());
@@ -64,7 +69,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(encoder.encode(userDto.getPassword()));
         userRepository.save(user);
-        return true;
+        userDto.setId(user.getId());
+        return userDto;
     }
 
     @Override

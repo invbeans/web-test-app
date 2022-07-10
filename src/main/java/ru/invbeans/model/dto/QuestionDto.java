@@ -8,7 +8,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class QuestionDto {
+    private Long id;
     private String name;
     private boolean oneAnswer;
+    private Long test;
     private OptionDto[] options;
+
+    public boolean getOneAnswer() {
+        return oneAnswer;
+    }
 }

@@ -2,6 +2,8 @@ package ru.invbeans.model.domain;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,26 +18,26 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "username", length = 32)
+    @Column(name = "username", length = 32, unique = true)
     private String username;
 
-    @Column(name = "email", length = 50, unique = true)
+    @Column(name = "email", length = 50)
     private String email;
 
-    @Column(name = "password", length = 50)
+    @Column(name = "password")
     private String password;
 
-    @Transient
-    private String passwordConfirm;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
     @Override
     public String getUsername(){
-        return email;
+        return username;
     }
 
     public Set<Role> getRoles() {
